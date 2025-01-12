@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import type * as vNG from "v-network-graph";
 import { reactive } from "vue";
+import type BeanMetadata from "@/types/BeanMetadata";
 
 export const useGraphStore = defineStore("graph", () => {
 	const nodes: vNG.Nodes = reactive({});
@@ -25,6 +26,28 @@ export const useGraphStore = defineStore("graph", () => {
 		}
 	};
 
+	const loadGraphFromApiResponse = (data: { [key: string]: BeanMetadata }) => {
+		clearGraph();
+		for (const item of Object.entries(data)) {
+			const name = item[0] as string;
+			const dependencies = item[1].dependencies;
+
+			if (!name.includes(".")) {
+				nodes[name] = { name: name };
+			}
+
+			if (dependencies) {
+				console.log(dependencies);
+				for (const to of dependencies) {
+					if (!String(to).includes(".")) {
+						const edgeName = `${name}_${to}`;
+						edges[edgeName] = { source: name, target: to };
+					}
+				}
+			}
+		}
+	};
+
 	const loadGraph = () => {
 		clearGraph();
 		nodes["node1"] = { name: "Node 1" };
@@ -37,5 +60,12 @@ export const useGraphStore = defineStore("graph", () => {
 		edges["edge3"] = { source: "node3", target: "node4" };
 	};
 
-	return { nodes, edges, layouts, loadGraph, clearGraph };
+	return {
+		nodes,
+		edges,
+		layouts,
+		loadGraph,
+		clearGraph,
+		loadGraphFromApiResponse,
+	};
 });
