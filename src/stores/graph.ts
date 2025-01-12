@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type * as vNG from "v-network-graph";
+import * as vNG from "v-network-graph";
 import { reactive } from "vue";
 import type BeanMetadata from "@/types/BeanMetadata";
 // @ts-ignore
@@ -16,6 +16,16 @@ export const useGraphStore = defineStore("graph", () => {
 			node2: { x: 50, y: 50 },
 			node3: { x: 100, y: 0 },
 			node4: { x: 150, y: 50 },
+		},
+	});
+
+	const configs: vNG.Config = vNG.defineConfigs({
+		edge: {
+			marker: {
+				target: {
+					type: "arrow",
+				},
+			},
 		},
 	});
 
@@ -109,6 +119,7 @@ export const useGraphStore = defineStore("graph", () => {
 		nodes,
 		edges,
 		layouts,
+		configs,
 		loadGraph,
 		clearGraph,
 		loadGraphFromApiResponse,
