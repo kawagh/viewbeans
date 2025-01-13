@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { useGraphStore } from "@/stores/graph";
 import type BeanMetaData from "@/types/BeanMetadata";
+import { ref } from "vue";
 const graphStore = useGraphStore();
 
+const typeInput = ref("");
 const handleFileUpload = (event) => {
 	const uploadedFile = event.target.files[0];
 	if (uploadedFile && uploadedFile.type === "application/json") {
@@ -30,7 +32,7 @@ const onCall = async () => {
 		// console.log(beanName);
 		// console.log(beanMetaData);
 	});
-	graphStore.loadGraphFromBeansObject(beans);
+	graphStore.loadGraphFromBeansObject(beans, { typeInclude: typeInput.value });
 };
 </script>
 
@@ -45,7 +47,17 @@ const onCall = async () => {
 				<input type="file" @change="handleFileUpload" accept=".json"/>
 			</li>
 			<li>
-				<button @click="onCall">API呼び出し(localhost:8080/actuator/beans)</button>
+				<div>
+					<button @click="onCall">API呼び出し(localhost:8080/actuator/beans)</button>
+					<div style="display: flex;">
+						<div>絞り込み条件: パッケージ名と型名に </div>
+						<input type="text"
+							v-model="typeInput"
+							placeholder="〇〇(任意)"
+						 />
+						 <div>を含む</div>
+					</div>
+				</div>
 			 </li>
 			 <li>
 				<button @click="graphStore.loadExampleGraph">サンプルの依存関係の読み込み</button>

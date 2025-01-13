@@ -11,6 +11,11 @@ export interface TreeNode extends vNG.Node {
 }
 export type TreeNodes = Record<string, TreeNode>;
 
+type LoadGraphConfigParam = "typeInclude";
+export type loadGraphConfig = {
+	[key in LoadGraphConfigParam]: string;
+};
+
 export const useGraphStore = defineStore("graph", () => {
 	const nodes: TreeNodes = reactive({});
 
@@ -73,15 +78,19 @@ export const useGraphStore = defineStore("graph", () => {
 		}
 	};
 
-	const loadGraphFromBeansObject = (data: { [key: string]: BeanMetadata }) => {
+	const loadGraphFromBeansObject = (
+		data: { [key: string]: BeanMetadata },
+		loadGraphConfig: loadGraphConfig = { typeInclude: "" },
+	) => {
 		clearGraph();
 		for (const item of Object.entries(data)) {
+			// '.'の含まれるものと含まれないものとがある
 			const name = item[0] as string;
 			const dependencies = item[1].dependencies;
-			console.log("type", item[1].type);
+			// package名と型名
 			const type = item[1].type;
 
-			if (!name.includes(".")) {
+			if (!name.includes(".") && type.includes(loadGraphConfig.typeInclude)) {
 				nodes[name] = { name: name, children: dependencies };
 			}
 
