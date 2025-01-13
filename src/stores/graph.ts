@@ -109,9 +109,11 @@ export const useGraphStore = defineStore("graph", () => {
 
 		g.nodes().forEach((nodeId: string) => {
 			// update node position
-			const x = g.node(nodeId).x;
-			const y = g.node(nodeId).y;
-			layouts.nodes[nodeId] = { x, y };
+			const x = g.node(nodeId)?.x;
+			const y = g.node(nodeId)?.y;
+			if (x && y) {
+				layouts.nodes[nodeId] = { x, y };
+			}
 		});
 	};
 
