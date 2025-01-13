@@ -26,7 +26,14 @@ const onCall = async () => {
 	<button @click="graphStore.layout('LR')">LR layout</button>
 	<button @click="graphStore.loadGraph">load</button>
 	<button @click="graphStore.clearGraph">clear</button>
-	<v-network-graph class="graph" :nodes="graphStore.nodes" :edges="graphStore.edges" :layouts="graphStore.layouts" :configs="graphStore.configs"/>
+	<v-network-graph 
+	class="graph" 
+	:nodes="graphStore.nodes" 
+	:edges="graphStore.edges" 
+	:layouts="graphStore.layouts" 
+	:configs="graphStore.configs"
+	:event-handlers=graphStore.eventHandlers
+	/>
 </template>
 
 <style scoped>

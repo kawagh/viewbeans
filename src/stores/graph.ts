@@ -5,8 +5,13 @@ import type BeanMetadata from "@/types/BeanMetadata";
 // @ts-ignore
 import dagre from "dagre/dist/dagre.min.js";
 
+export interface TreeNode extends vNG.Node {
+	children?: string[];
+}
+export type TreeNodes = Record<string, TreeNode>;
+
 export const useGraphStore = defineStore("graph", () => {
-	const nodes: vNG.Nodes = reactive({});
+	const nodes: TreeNodes = reactive({});
 
 	const edges: vNG.Edges = reactive({});
 
@@ -19,7 +24,12 @@ export const useGraphStore = defineStore("graph", () => {
 		},
 	});
 
-	const configs: vNG.Config = vNG.defineConfigs({
+	const configs: vNG.Config = vNG.defineConfigs<TreeNode>({
+		node: {
+			normal: {
+				color: (node) => (node.name?.includes("deleted") ? "red" : "blue"),
+			},
+		},
 		edge: {
 			marker: {
 				target: {
@@ -28,6 +38,27 @@ export const useGraphStore = defineStore("graph", () => {
 			},
 		},
 	});
+
+	const eventHandlers: vNG.EventHandlers = {
+		"node:click": ({ node }) => {
+			traverseNodes(node);
+		},
+	};
+	const traverseNodes = (nodeId: string) => {
+		const chidlren = nodes[nodeId]?.children;
+		if (chidlren === undefined) {
+			return;
+		}
+		for (const node of Object.entries(chidlren)) {
+			if (nodes[node[1]] !== undefined) {
+				traverseNodes(node[1]);
+				nodes[node[1]].name = "deleted";
+
+				// delete nodes
+				// delete nodes[node[1]];
+			}
+		}
+	};
 
 	const clearGraph = () => {
 		for (const edge of Object.keys(edges)) {
@@ -47,7 +78,7 @@ export const useGraphStore = defineStore("graph", () => {
 			const type = item[1].type;
 
 			if (!name.includes(".") && type.includes("kawagh")) {
-				nodes[name] = { name: name };
+				nodes[name] = { name: name, children: dependencies };
 			}
 
 			if (dependencies) {
@@ -122,6 +153,7 @@ export const useGraphStore = defineStore("graph", () => {
 		edges,
 		layouts,
 		configs,
+		eventHandlers,
 		loadGraph,
 		clearGraph,
 		loadGraphFromApiResponse,
