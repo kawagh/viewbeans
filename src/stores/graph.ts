@@ -4,6 +4,7 @@ import { reactive } from "vue";
 import type BeanMetadata from "@/types/BeanMetadata";
 // @ts-ignore
 import dagre from "dagre/dist/dagre.min.js";
+import { ForceLayout } from "v-network-graph/lib/force-layout";
 
 export interface TreeNode extends vNG.Node {
 	children?: string[];
@@ -25,6 +26,9 @@ export const useGraphStore = defineStore("graph", () => {
 	});
 
 	const configs: vNG.Config = vNG.defineConfigs<TreeNode>({
+		view: {
+			layoutHandler: new ForceLayout(),
+		},
 		node: {
 			normal: {
 				color: (node) => (node.name?.includes("deleted") ? "red" : "blue"),
