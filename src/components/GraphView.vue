@@ -9,7 +9,6 @@ const searchQuery = ref("");
 const graphStore = useGraphStore();
 const graphInstance = ref<VNetworkGraphInstance>();
 const focusToSpecificNode = (nodeId: string) => {
-	graphStore.layouts.nodes.ExampleService.x;
 	graphInstance.value?.setViewBox({
 		left: graphStore.layouts.nodes[nodeId].x - 500,
 		right: graphStore.layouts.nodes[nodeId].x + 500,
