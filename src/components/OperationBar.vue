@@ -3,7 +3,6 @@ import { useGraphStore } from "@/stores/graph";
 import type BeanMetaData from "@/types/BeanMetadata";
 const graphStore = useGraphStore();
 
-
 const handleFileUpload = (event) => {
 	const uploadedFile = event.target.files[0];
 	if (uploadedFile && uploadedFile.type === "application/json") {
@@ -36,12 +35,27 @@ const onCall = async () => {
 </script>
 
 <template>
-    <div>
-      <input type="file" @change="handleFileUpload" accept=".json"/>
-    </div>
-	<button @click="onCall">call</button>
+	<!-- グラフ読み込み操作 -->
+	<div>
+		<h3>
+			beansの依存関係の読み込み
+		</h3>
+		<ul>
+			<li>
+				<input type="file" @change="handleFileUpload" accept=".json"/>
+			</li>
+			<li>
+				<button @click="onCall">API呼び出し(localhost:8080/actuator/beans)</button>
+			 </li>
+			 <li>
+				<button @click="graphStore.loadGraph">サンプルの依存関係の読み込み</button>
+			 </li>
+		</ul>
+	</div>
+	<div>
+		<h3>グラフ操作</h3>
+	</div>
 	<button @click="graphStore.layout('TB')">TB layout</button>
 	<button @click="graphStore.layout('LR')">LR layout</button>
-	<button @click="graphStore.loadGraph">load</button>
 	<button @click="graphStore.clearGraph">clear</button>
 </template>

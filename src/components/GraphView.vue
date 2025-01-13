@@ -2,7 +2,6 @@
 import { VNetworkGraph } from "v-network-graph";
 import { useGraphStore } from "@/stores/graph";
 const graphStore = useGraphStore();
-
 </script>
 
 <template>

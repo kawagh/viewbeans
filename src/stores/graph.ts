@@ -99,9 +99,9 @@ export const useGraphStore = defineStore("graph", () => {
 
 	const loadGraph = () => {
 		clearGraph();
-		nodes["node1"] = { name: "Node 1" };
-		nodes["node2"] = { name: "Node 2" };
-		nodes["node3"] = { name: "Node 3" };
+		nodes["node1"] = { name: "Node 1", children: ["node2"] };
+		nodes["node2"] = { name: "Node 2", children: ["node3"] };
+		nodes["node3"] = { name: "Node 3", children: ["node4"] };
 		nodes["node4"] = { name: "Node 4" };
 
 		edges["edge1"] = { source: "node1", target: "node2" };
