@@ -2,9 +2,11 @@
 
 ##  about
 
+
 viewbeans is web application to visualize SpringBoot application beans dependencies from SpringBoot actuator API response
 
-https://spring.pleiades.io/spring-boot/api/rest/actuator/beans.html
+![image](./resources/preview.png)
+
 
 ## usage
 
@@ -19,3 +21,9 @@ npm install
 ```shell
 npm run dev
 ```
+
+## reference
+
+- SpringBoot actuator /beans API resopnse structures are shown below link.
+
+https://spring.pleiades.io/spring-boot/api/rest/actuator/beans.html
