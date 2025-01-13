@@ -97,16 +97,37 @@ export const useGraphStore = defineStore("graph", () => {
 		}
 	};
 
-	const loadGraph = () => {
+	const loadExampleGraph = () => {
 		clearGraph();
-		nodes["node1"] = { name: "Node 1", children: ["node2"] };
-		nodes["node2"] = { name: "Node 2", children: ["node3"] };
-		nodes["node3"] = { name: "Node 3", children: ["node4"] };
-		nodes["node4"] = { name: "Node 4" };
+		nodes["ExampleController"] = {
+			name: "ExampleController",
+			children: ["ExampleService"],
+		};
+		nodes["ExampleService"] = {
+			name: "ExampleService",
+			children: ["ExampleRepository", "ExternalApi"],
+		};
+		nodes["ExternalApi"] = {
+			name: "ExternalApi",
+		};
+		nodes["ExampleRepository"] = {
+			name: "ExampleRepository",
+			children: ["ExampleMapper"],
+		};
+		nodes["ExampleMapper"] = { name: "ExampleMapper" };
 
-		edges["edge1"] = { source: "node1", target: "node2" };
-		edges["edge2"] = { source: "node2", target: "node3" };
-		edges["edge3"] = { source: "node3", target: "node4" };
+		// add edges from TreeNode.children
+		for (const node of Object.entries(nodes)) {
+			const children = node[1].children;
+			if (children === undefined) {
+				continue;
+			}
+			for (const child of children) {
+				console.log(node, child);
+				const edgeName = `${node[0]}_${child}`;
+				edges[edgeName] = { source: node[0], target: child };
+			}
+		}
 	};
 
 	const layout = (direction: "TB" | "LR") => {
@@ -158,7 +179,7 @@ export const useGraphStore = defineStore("graph", () => {
 		layouts,
 		configs,
 		eventHandlers,
-		loadGraph,
+		loadExampleGraph,
 		clearGraph,
 		loadGraphFromApiResponse,
 		layout,

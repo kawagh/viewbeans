@@ -48,7 +48,7 @@ const onCall = async () => {
 				<button @click="onCall">API呼び出し(localhost:8080/actuator/beans)</button>
 			 </li>
 			 <li>
-				<button @click="graphStore.loadGraph">サンプルの依存関係の読み込み</button>
+				<button @click="graphStore.loadExampleGraph">サンプルの依存関係の読み込み</button>
 			 </li>
 		</ul>
 	</div>
