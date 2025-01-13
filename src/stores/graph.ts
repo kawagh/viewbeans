@@ -73,7 +73,7 @@ export const useGraphStore = defineStore("graph", () => {
 		}
 	};
 
-	const loadGraphFromApiResponse = (data: { [key: string]: BeanMetadata }) => {
+	const loadGraphFromBeansObject = (data: { [key: string]: BeanMetadata }) => {
 		clearGraph();
 		for (const item of Object.entries(data)) {
 			const name = item[0] as string;
@@ -181,7 +181,7 @@ export const useGraphStore = defineStore("graph", () => {
 		eventHandlers,
 		loadExampleGraph,
 		clearGraph,
-		loadGraphFromApiResponse,
+		loadGraphFromBeansObject,
 		layout,
 	};
 });

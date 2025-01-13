@@ -11,7 +11,7 @@ const handleFileUpload = (event) => {
 			const jsondata = JSON.parse(e.target.result);
 			console.log(jsondata);
 			const beans = jsondata["contexts"]["application"]["beans"];
-			graphStore.loadGraphFromApiResponse(beans);
+			graphStore.loadGraphFromBeansObject(beans);
 			console.log(jsondata);
 		};
 		reader.readAsText(uploadedFile);
@@ -30,7 +30,7 @@ const onCall = async () => {
 		// console.log(beanName);
 		// console.log(beanMetaData);
 	});
-	graphStore.loadGraphFromApiResponse(beans);
+	graphStore.loadGraphFromBeansObject(beans);
 };
 </script>
 
