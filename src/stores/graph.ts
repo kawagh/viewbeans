@@ -81,7 +81,7 @@ export const useGraphStore = defineStore("graph", () => {
 			console.log("type", item[1].type);
 			const type = item[1].type;
 
-			if (!name.includes(".") && type.includes("kawagh")) {
+			if (!name.includes(".")) {
 				nodes[name] = { name: name, children: dependencies };
 			}
 
