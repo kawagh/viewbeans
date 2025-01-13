@@ -148,29 +148,28 @@ export const useGraphStore = defineStore("graph", () => {
 		// Add nodes to the graph. The first argument is the node id. The second is
 		// metadata about the node. In this case we're going to add labels to each of
 		// our nodes.
-		Object.entries(nodes).forEach(([nodeId, node]) => {
+		for (const [nodeId, node] of Object.entries(nodes)) {
 			g.setNode(nodeId, {
 				label: node.name,
 				width: nodeSize,
 				height: nodeSize,
 			});
-		});
+		}
 
 		// Add edges to the graph.
-		Object.values(edges).forEach((edge) => {
+		for (const edge of Object.values(edges)) {
 			g.setEdge(edge.source, edge.target);
-		});
-
+		}
 		dagre.layout(g);
 
-		g.nodes().forEach((nodeId: string) => {
+		for (const nodeId of g.nodes()) {
 			// update node position
 			const x = g.node(nodeId)?.x;
 			const y = g.node(nodeId)?.y;
 			if (x && y) {
 				layouts.nodes[nodeId] = { x, y };
 			}
-		});
+		}
 	};
 
 	return {
