@@ -64,8 +64,8 @@ const queryRelatedNodes: ComputedRef<TreeNode[]> = computed(() => {
 
 <style scoped>
 .graph {
-	width:99vw;
-	height: 80vh;
+	width: 90vw;
+	height: 70vh;
 	border: 1px solid;
 }
 </style>
