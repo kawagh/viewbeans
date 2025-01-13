@@ -38,8 +38,8 @@ const onCall = async () => {
 
 <style scoped>
 .graph {
-	width:800px;
-	height: 600px;
+	width:99vw;
+	height: 80vh;
 	border: 1px solid;
 }
 </style>
