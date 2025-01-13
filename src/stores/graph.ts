@@ -99,22 +99,22 @@ export const useGraphStore = defineStore("graph", () => {
 
 	const loadExampleGraph = () => {
 		clearGraph();
-		nodes["ExampleController"] = {
+		nodes.ExampleController = {
 			name: "ExampleController",
 			children: ["ExampleService"],
 		};
-		nodes["ExampleService"] = {
+		nodes.ExampleService = {
 			name: "ExampleService",
 			children: ["ExampleRepository", "ExternalApi"],
 		};
-		nodes["ExternalApi"] = {
+		nodes.ExternalApi = {
 			name: "ExternalApi",
 		};
-		nodes["ExampleRepository"] = {
+		nodes.ExampleRepository = {
 			name: "ExampleRepository",
 			children: ["ExampleMapper"],
 		};
-		nodes["ExampleMapper"] = { name: "ExampleMapper" };
+		nodes.ExampleMapper = { name: "ExampleMapper" };
 
 		// add edges from TreeNode.children
 		for (const node of Object.entries(nodes)) {
