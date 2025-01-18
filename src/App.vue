@@ -4,10 +4,9 @@ import OperationBar from "./components/OperationBar.vue";
 </script>
 
 <template>
-    <h1>viewbeans</h1>
-	<OperationBar/>
-    <GraphView/>
+  <h1>viewbeans</h1>
+  <OperationBar />
+  <GraphView />
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
