@@ -22,6 +22,20 @@ npm install
 npm run dev
 ```
 
+## format
+
+- vue file
+
+```
+npx prettier ./**/*.vue --write
+```
+
+- other file
+
+```
+npx @biomejs/biome format --write .
+```
+
 ## reference
 
 - SpringBoot actuator /beans API resopnse structures are shown below link.
