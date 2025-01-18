@@ -50,7 +50,8 @@ export const useGraphStore = defineStore("graph", () => {
 
 	const eventHandlers: vNG.EventHandlers = {
 		"node:click": ({ node }) => {
-			traverseNodes(node);
+			deleteOtherNodes(node);
+			// traverseNodes(node);
 		},
 	};
 	const traverseNodes = (nodeId: string) => {
@@ -67,6 +68,36 @@ export const useGraphStore = defineStore("graph", () => {
 				// delete nodes[node[1]];
 			}
 		}
+	};
+
+	/**
+	 * 選択されたノードを親とする木に含まれるノード以外を削除する
+	 *
+	 * @param selectedNodeId
+	 */
+	const deleteOtherNodes = (selectedNodeId: string) => {
+		const nodeQueue = [selectedNodeId];
+		const seen = new Set([selectedNodeId]);
+		while (nodeQueue.length !== 0) {
+			const nodeId = nodeQueue.pop();
+			if (!nodeId) {
+				return;
+			}
+			const children = nodes[nodeId]?.children;
+			if (!children) {
+				continue;
+			}
+			for (const child of children) {
+				seen.add(child);
+				nodeQueue.push(child);
+			}
+		}
+		for (const [nodeId, treeNode] of Object.entries(nodes)) {
+			if (!seen.has(nodeId)) {
+				delete nodes[nodeId];
+			}
+		}
+		// delete edges
 	};
 
 	const clearGraph = () => {
@@ -189,6 +220,7 @@ export const useGraphStore = defineStore("graph", () => {
 		eventHandlers,
 		loadExampleGraph,
 		clearGraph,
+		deleteOtherNodes,
 		loadGraphFromBeansObject,
 		layout,
 	};
