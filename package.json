@@ -11,6 +11,7 @@
 		"type-check": "vue-tsc --build"
 	},
 	"dependencies": {
+		"d3-force": "^3.0.0",
 		"dagre": "^0.8.5",
 		"pinia": "^2.3.0",
 		"v-network-graph": "^0.9.18",
